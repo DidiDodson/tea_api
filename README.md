@@ -7,7 +7,7 @@ This app was built using a service-oriented architecture. This backend part of t
 
 ## Schema
 
-[Tea BE Schema](app/channels/schema.jpg)
+[Tea BE Schema](app/channels/schema.png)
 
 ## Tools Used:
 
