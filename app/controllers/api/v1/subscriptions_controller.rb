@@ -33,7 +33,7 @@ class Api::V1::SubscriptionsController < ApplicationController
     subscription.temperature = tea[:temperature]
 
     if subscription.save
-      render json: SubscriptionsSerializer.new(subscription)
+      render json: SubscriptionsSerializer.new(subscription)  
     else
       render json: { errors: { details: "There was an error updating this subscription" } }, status: 400
     end

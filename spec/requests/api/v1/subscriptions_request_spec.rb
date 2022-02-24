@@ -90,7 +90,7 @@ RSpec.describe 'Subscription API' do
     expect(request[:attributes][:brew_time]).to eq(3)
   end
 
-  it 'sad path - it creates a new subscription' do
+  it 'sad path - empty validated value - it creates a new subscription' do
     customer = create(:customer)
     tea = double("chamomile")
     allow(tea).to receive(:tea_name).and_return("chamomile")
@@ -101,6 +101,29 @@ RSpec.describe 'Subscription API' do
     params = {title: '',
               status: 'active',
               price: 41.2,
+              frequency: 4,
+              customer_id: customer.id
+            }
+
+    post "/api/v1/customers/#{customer.id}/subscriptions?name=#{tea.tea_name}", headers: {"Content-Type": "application/json"}, params: params.to_json
+
+    error = (JSON.parse(response.body, symbolize_names: true))[:errors][:details]
+
+    expect(response.status).to eq(400)
+    expect(error).to eq("There was an error creating this subscription")
+  end
+
+  it 'sad path - incorrect data type - it creates a new subscription' do
+    customer = create(:customer)
+    tea = double("chamomile")
+    allow(tea).to receive(:tea_name).and_return("chamomile")
+    allow(tea).to receive(:tea_description).and_return("calming and soothing")
+    allow(tea).to receive(:brew_time).and_return(2)
+    allow(tea).to receive(:temperature).and_return(100)
+
+    params = {title: '',
+              status: 'active',
+              price: 'cats',
               frequency: 4,
               customer_id: customer.id
             }
@@ -139,7 +162,7 @@ RSpec.describe 'Subscription API' do
     expect(request[:attributes][:status]).to eq("cancelled")
   end
 
-  it 'sad path - updates a subscription' do
+  it 'sad path - empty validated field - updates a subscription' do
     customer = create(:customer)
     tea = double("chamomile")
     allow(tea).to receive(:tea_name).and_return("chamomile")
@@ -153,11 +176,32 @@ RSpec.describe 'Subscription API' do
               status: '',
               price: 41.2,
               frequency: 4,
-              customer_id: customer.id,
-              # tea_name: tea.tea_name,
-              # tea_description: tea.tea_description,
-              # brew_time: tea.brew_time,
-              # temperature: tea.temperature
+              customer_id: customer.id
+            }
+
+    patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription.id}?name=#{tea.tea_name}", headers: {"Content-Type": "application/json"}, params: params.to_json
+
+    error = (JSON.parse(response.body, symbolize_names: true))[:errors][:details]
+
+    expect(response.status).to eq(400)
+    expect(error).to eq("There was an error updating this subscription")
+  end
+
+  it 'sad path - incorrect data type - updates a subscription' do
+    customer = create(:customer)
+    tea = double("chamomile")
+    allow(tea).to receive(:tea_name).and_return("chamomile")
+    allow(tea).to receive(:tea_description).and_return("calming and soothing")
+    allow(tea).to receive(:brew_time).and_return(2)
+    allow(tea).to receive(:temperature).and_return(100)
+
+    subscription = create(:subscription, customer_id: customer.id, status: "active", tea_name: tea.tea_name, tea_description: tea.tea_description, brew_time: tea.brew_time, temperature: tea.temperature)
+
+    params = {title: 'chamomile',
+              status: '',
+              price: 41.2,
+              frequency: [34],
+              customer_id: customer.id
             }
 
     patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription.id}?name=#{tea.tea_name}", headers: {"Content-Type": "application/json"}, params: params.to_json
