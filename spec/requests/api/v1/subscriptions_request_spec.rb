@@ -70,28 +70,24 @@ RSpec.describe 'Subscription API' do
     tea = double("chamomile")
     allow(tea).to receive(:tea_name).and_return("chamomile")
     allow(tea).to receive(:tea_description).and_return("calming and soothing")
-    allow(tea).to receive(:brew_time).and_return(2)
+    allow(tea).to receive(:brew_time).and_return(3)
     allow(tea).to receive(:temperature).and_return(100)
 
     params = {title: 'chamomile',
               status: 'active',
               price: 41.2,
               frequency: 4,
-              customer_id: customer.id,
-              tea_name: tea.tea_name,
-              tea_description: tea.tea_description,
-              brew_time: tea.brew_time,
-              temperature: tea.temperature
+              customer_id: customer.id
             }
 
-    post "/api/v1/customers/#{customer.id}/subscriptions", headers: {"Content-Type": "application/json"}, params: params.to_json
+    post "/api/v1/customers/#{customer.id}/subscriptions?name=#{tea.tea_name}", headers: {"Content-Type": "application/json"}, params: params.to_json
 
     expect(response.status).to eq(201)
 
     request = (JSON.parse(response.body, symbolize_names: true))[:data]
 
     expect(request[:attributes][:title]).to eq("chamomile")
-    expect(request[:attributes][:brew_time]).to eq(2)
+    expect(request[:attributes][:brew_time]).to eq(3)
   end
 
   it 'sad path - it creates a new subscription' do
@@ -106,14 +102,10 @@ RSpec.describe 'Subscription API' do
               status: 'active',
               price: 41.2,
               frequency: 4,
-              customer_id: customer.id,
-              tea_name: tea.tea_name,
-              tea_description: tea.tea_description,
-              brew_time: tea.brew_time,
-              temperature: tea.temperature
+              customer_id: customer.id
             }
 
-    post "/api/v1/customers/#{customer.id}/subscriptions", headers: {"Content-Type": "application/json"}, params: params.to_json
+    post "/api/v1/customers/#{customer.id}/subscriptions?name=#{tea.tea_name}", headers: {"Content-Type": "application/json"}, params: params.to_json
 
     error = (JSON.parse(response.body, symbolize_names: true))[:errors][:details]
 
@@ -135,14 +127,10 @@ RSpec.describe 'Subscription API' do
               status: 'cancelled',
               price: 41.2,
               frequency: 4,
-              customer_id: customer.id,
-              tea_name: tea.tea_name,
-              tea_description: tea.tea_description,
-              brew_time: tea.brew_time,
-              temperature: tea.temperature
+              customer_id: customer.id
             }
 
-    patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription.id}", headers: {"Content-Type": "application/json"}, params: params.to_json
+    patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription.id}?name=#{tea.tea_name}", headers: {"Content-Type": "application/json"}, params: params.to_json
 
     expect(response.status).to eq(200)
 
@@ -166,13 +154,13 @@ RSpec.describe 'Subscription API' do
               price: 41.2,
               frequency: 4,
               customer_id: customer.id,
-              tea_name: tea.tea_name,
-              tea_description: tea.tea_description,
-              brew_time: tea.brew_time,
-              temperature: tea.temperature
+              # tea_name: tea.tea_name,
+              # tea_description: tea.tea_description,
+              # brew_time: tea.brew_time,
+              # temperature: tea.temperature
             }
 
-    patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription.id}", headers: {"Content-Type": "application/json"}, params: params.to_json
+    patch "/api/v1/customers/#{customer.id}/subscriptions/#{subscription.id}?name=#{tea.tea_name}", headers: {"Content-Type": "application/json"}, params: params.to_json
 
     error = (JSON.parse(response.body, symbolize_names: true))[:errors][:details]
 

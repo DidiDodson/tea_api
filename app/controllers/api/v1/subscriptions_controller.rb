@@ -1,17 +1,21 @@
 class Api::V1::SubscriptionsController < ApplicationController
   def index
     customer = Customer.find_by(params[:id])
-    tea = TeaFacade.find_tea(params[:name])
     if customer.subscriptions == []
       render json: { errors: { details: "Subscriptions not found" } }, status: 404
     else
-      render json: SubscriptionsSerializer.new(Subscription.by_customer(customer))
+      render json: SubscriptionsSerializer.new(Subscription.where("customer_id = ?", params[:customer_id]))
     end
   end
 
   def create
     tea = TeaFacade.find_tea(params[:name])
+
     subscription = Subscription.create(subscription_params)
+    subscription.tea_name = tea[:name]
+    subscription.tea_description = tea[:description]
+    subscription.brew_time = tea[:brew_time]
+    subscription.temperature = tea[:temperature]
     if subscription.save
       render json: SubscriptionsSerializer.new(Subscription.find(subscription.id)), status: 201
     else
@@ -22,6 +26,10 @@ class Api::V1::SubscriptionsController < ApplicationController
   def update
     tea = TeaFacade.find_tea(params[:name])
     subscription = Subscription.update(params[:id], subscription_params)
+    subscription.tea_name = tea[:name]
+    subscription.tea_description = tea[:description]
+    subscription.brew_time = tea[:brew_time]
+    subscription.temperature = tea[:temperature]
 
     if subscription.save
       render json: SubscriptionsSerializer.new(subscription)
