@@ -12,10 +12,11 @@ class Api::V1::SubscriptionsController < ApplicationController
   def create
     tea = TeaFacade.find_tea(params[:name])
     subscription = Subscription.create(subscription_params)
-    subscription.tea_name = tea[:name]
-    subscription.tea_description = tea[:description]
-    subscription.brew_time = tea[:brew_time]
-    subscription.temperature = tea[:temperature]
+
+    subscription.tea_name = tea.name
+    subscription.tea_description = tea.description
+    subscription.brew_time = tea.brew_time
+    subscription.temperature = tea.temperature
 
     if subscription.save
       render json: SubscriptionsSerializer.new(Subscription.find(subscription.id)), status: 201
@@ -27,13 +28,13 @@ class Api::V1::SubscriptionsController < ApplicationController
   def update
     tea = TeaFacade.find_tea(params[:name])
     subscription = Subscription.update(params[:id], subscription_params)
-    subscription.tea_name = tea[:name]
-    subscription.tea_description = tea[:description]
-    subscription.brew_time = tea[:brew_time]
-    subscription.temperature = tea[:temperature]
+    subscription.tea_name = tea.name
+    subscription.tea_description = tea.description
+    subscription.brew_time = tea.brew_time
+    subscription.temperature = tea.temperature
 
     if subscription.save
-      render json: SubscriptionsSerializer.new(subscription)  
+      render json: SubscriptionsSerializer.new(subscription)
     else
       render json: { errors: { details: "There was an error updating this subscription" } }, status: 400
     end
