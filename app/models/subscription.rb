@@ -2,10 +2,10 @@ class Subscription < ApplicationRecord
   belongs_to :customer
 
   validates :title, presence: true
-  validates :price, presence: true
+  validates :price, numericality: true, presence: true
   validates :status, presence: true
-  validates :frequency, presence: true
-  validates :customer_id, presence: true
+  validates :frequency, numericality: true, presence: true
+  validates :customer_id, numericality: true, presence: true
   validates :tea_name, presence: true
   validates :tea_description, presence: true
   validates :temperature, numericality: true, presence: true
