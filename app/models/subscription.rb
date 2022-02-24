@@ -15,4 +15,8 @@ class Subscription < ApplicationRecord
     active: 0,
     cancelled: 1,
   }
+
+  def self.by_customer(num)
+    self.where(customer_id: num.to_i)
+  end
 end
