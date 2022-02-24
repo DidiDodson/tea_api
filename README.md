@@ -3,7 +3,7 @@ The Tea BE API is an application that consumes Victoria Lo's [Tea API](https://g
 
 ## Architecture
 
-This app was built using a service-oriented architecture. This backend part of the app is responsible for exposing data for the front-end to consume and display to our end users.
+This app was built using a service-oriented architecture. This backend part of the app is responsible for exposing data for the frontend to consume and display to end users.
 
 ## Schema
 
@@ -14,6 +14,8 @@ This app was built using a service-oriented architecture. This backend part of t
 ![Rails](https://img.shields.io/badge/rails-%23CC0000.svg?style=for-the-badge&logo=ruby-on-rails&logoColor=white)
 ![Ruby](https://img.shields.io/badge/ruby-%23CC342D.svg?style=for-the-badge&logo=ruby&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+Rails 5.2.6, Ruby 2.7.2
 
 ## Setup
 
