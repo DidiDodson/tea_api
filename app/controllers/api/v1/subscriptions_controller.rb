@@ -2,11 +2,7 @@ class Api::V1::SubscriptionsController < ApplicationController
   def index
     customer = Customer.find(params[:customer_id])
 
-    if customer.subscriptions == []
-      render json: { errors: { details: "Subscriptions not found" } }, status: 404
-    else
-      render json: SubscriptionsSerializer.new(Subscription.by_customer(customer.id))
-    end
+    render json: SubscriptionsSerializer.new(Subscription.by_customer(customer.id))
   end
 
   def create

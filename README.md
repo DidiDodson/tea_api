@@ -68,7 +68,7 @@ Rails 5.2.6, Ruby 2.7.2
 }
   ```
   - Creates a new subscription
-    * POST `/api/v1/customers/:customer_id/subscriptions`
+    * POST `/api/v1/customers/:customer_id/subscriptions?=#{tea_name}`
 
   - Updates an existing request
-    * PATCH `/api/v1/customers/:customer_id/subscriptions/:subscription_id`
+    * PATCH `/api/v1/customers/:customer_id/subscriptions/:subscription_id?=#{tea_name}`

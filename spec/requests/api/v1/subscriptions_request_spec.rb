@@ -54,17 +54,6 @@ RSpec.describe 'Subscription API' do
     end
   end
 
-  it 'sad path - finds all of a customers subscriptions' do
-    customer = create(:customer)
-
-    get "/api/v1/customers/#{customer.id}/subscriptions"
-
-    error = (JSON.parse(response.body, symbolize_names: true))[:errors][:details]
-
-    expect(response.status).to eq(404)
-    expect(error).to eq("Subscriptions not found")
-  end
-
   it 'happy path - it creates a new subscription' do
     customer = create(:customer)
     tea = double("chamomile")
