@@ -71,10 +71,11 @@ This repo uses RSpec, Capybara, and Shouldamatchers to fully test the functional
     ]
 }
   ```
-  For the following two endpoints, the tea name must be passed as a param into the URI so that it can consume Victoria Lo's Tea API data. A list of tea names can be found here: [tea names](tea_names.rb).
 
-  - Creates a new subscription
-    * POST `/api/v1/customers/:customer_id/subscriptions?=#{tea_name}`
+  For the following two endpoints, the tea name must be passed as a param into the URI so that it can consume Victoria Lo's Tea API data. A list of tea names can be found here: ![tea names](tea_names.rb).
+  
+- Creates a new subscription
+  * POST `/api/v1/customers/:customer_id/subscriptions?=#{tea_name}`
 
-  - Updates an existing request
-    * PATCH `/api/v1/customers/:customer_id/subscriptions/:subscription_id?=#{tea_name}`
+- Updates an existing request
+  * PATCH `/api/v1/customers/:customer_id/subscriptions/:subscription_id?=#{tea_name}`
