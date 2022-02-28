@@ -31,6 +31,8 @@ This repo uses RSpec, Capybara, and Shouldamatchers to fully test the functional
   * Note: Be sure that your URI starts with `/api/v1/`
 
 ## Endpoints
+Note: The first endpoint requires a :customer_id, but it does not require a tea name to be passed as a param. The POST and PATCH endpoints require a tea name be passed as a param into the URI so that it can consume Victoria Lo's Tea API data. They also require a :customer_id. A list of tea names can be found here: ![tea names](tea_names.rb).
+
 - Get all subscriptions for a customer
    *  GET `/api/v1/customers/:customer_id/subscriptions`
 
@@ -72,8 +74,6 @@ This repo uses RSpec, Capybara, and Shouldamatchers to fully test the functional
 }
   ```
 
-  For the following two endpoints, the tea name must be passed as a param into the URI so that it can consume Victoria Lo's Tea API data. A list of tea names can be found here: ![tea names](tea_names.rb).
-  
 - Creates a new subscription
   * POST `/api/v1/customers/:customer_id/subscriptions?=#{tea_name}`
 
