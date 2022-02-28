@@ -3,11 +3,12 @@ The Tea BE API is an application that consumes Victoria Lo's [Tea API](https://g
 
 ## Architecture
 
-This app was built using a service-oriented architecture. This backend part of the app is responsible for exposing data for the frontend to consume and display to end users.
+This app was built using a service-oriented architecture. This repo is responsible for exposing data for the frontend to consume and display to end users. This repo consumed Victoria Lo's Tea API data via a service-facade-poro paradigm that abstracts these functions out of the controller.
 
 ## Schema
 
 ![Tea BE Schema](app/channels/schema.png)
+The basic design for this app includes two tables. The Subscriptions table consumes the Tea API data from Victoria Lo's endpoint.
 
 ## Tools Used:
 
@@ -15,16 +16,19 @@ This app was built using a service-oriented architecture. This backend part of t
 ![Ruby](https://img.shields.io/badge/ruby-%23CC342D.svg?style=for-the-badge&logo=ruby&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
-Rails 5.2.6, Ruby 2.7.2
+Rails 5.2.6, Ruby 2.7.2, RSpec, Faraday
+
+## Testing
+This repo uses RSpec, Capybara, and Shouldamatchers to fully test the functionality. Each element is tested, and coverage is at 100%. The request testing also includes sad-path and edge-case testing. Additionally, mocks and stubs are used instead of calling Victoria Lo's Tea API for each test, and factories are used to create the test data for customers and subscriptions.
 
 ## Setup
 
 * From the command line, install gems and set up your DB:
   * `bundle`
   * `rails db:{drop,create,migrate}`
-* Run test suite with `bundle exec rspec`.
+* Run test suite with `bundle exec rspec`
 * Run your development server with `rails s` to see the endpoints in action!
-  * Be sure that your URI starts with `/api/v1/`
+  * Note: Be sure that your URI starts with `/api/v1/`
 
 ## Endpoints
 - Get all subscriptions for a customer
@@ -67,6 +71,8 @@ Rails 5.2.6, Ruby 2.7.2
     ]
 }
   ```
+  For the following two endpoints, the tea name must be passed as a param into the URI so that it can consume Victoria Lo's Tea API data. A list of tea names can be found here: [tea names](tea_names.rb).
+
   - Creates a new subscription
     * POST `/api/v1/customers/:customer_id/subscriptions?=#{tea_name}`
 
