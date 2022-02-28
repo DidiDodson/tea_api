@@ -19,7 +19,7 @@ The basic design for this app includes two tables. The Subscriptions table consu
 Rails 5.2.6, Ruby 2.7.2, RSpec, Faraday
 
 ## Testing
-This repo uses RSpec, Capybara, and Shouldamatchers to fully test the functionality. Each element is tested, and coverage is at 100%. The request testing also includes sad-path and edge-case testing. Additionally, mocks and stubs are used instead of calling Victoria Lo's Tea API for each test, and factories are used to create the test data for customers and subscriptions.
+This repo uses RSpec, Capybara, and Shouldamatchers to fully test functionality. Each element is tested, and coverage is at 100%. The request testing also includes sad-path and edge-case testing. Additionally, mocks and stubs are used instead of calling Victoria Lo's Tea API for each test, and factories are used to create the test data for customers and subscriptions.
 
 ## Setup
 
