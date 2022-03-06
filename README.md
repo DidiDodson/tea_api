@@ -1,4 +1,5 @@
 # Tea Backend API
+
 The Tea BE API is an application that consumes Victoria Lo's [Tea API](https://github.com/victoria-lo/TAPI), and exposes customer and subscription data for a notional Frontend to consume.
 
 ## Architecture
@@ -19,25 +20,27 @@ The basic design for this app includes two tables. The Subscriptions table consu
 Rails 5.2.6, Ruby 2.7.2, RSpec, Faraday
 
 ## Testing
+
 This repo uses RSpec, Capybara, and Shouldamatchers to fully test functionality. Each element is tested, and coverage is at 100%. The request testing also includes sad-path and edge-case testing. Additionally, mocks and stubs are used instead of calling Victoria Lo's Tea API for each test, and factories are used to create the test data for customers and subscriptions.
 
 ## Setup
 
-* From the command line, install gems and set up your DB:
-  * `bundle`
-  * `rails db:{drop,create,migrate}`
-* Run test suite with `bundle exec rspec`
-* Run your development server with `rails s` to see the endpoints in action!
-  * Note: Be sure that your URI starts with `/api/v1/`
+- From the command line, install gems and set up your DB:
+  - `bundle`
+  - `rails db:{drop,create,migrate}`
+- Run test suite with `bundle exec rspec`
+- Run your development server with `rails s` to see the endpoints in action!
+  - Note: Be sure that your URI starts with `/api/v1/`
 
 ## Endpoints
+
 Note: The first endpoint requires a :customer_id, but it does not require a tea name to be passed as a param. The POST and PATCH endpoints require a tea name be passed as a param into the URI so that it can consume Victoria Lo's Tea API data. They also require a :customer_id. A list of tea names can be found here: [tea names](tea_names.rb).
 
 - Get all subscriptions for a customer
-   *  GET `/api/v1/customers/:customer_id/subscriptions`
+  GET `/api/v1/customers/:customer_id/subscriptions`
 
-   Example response:
-     ```
+Example response:
+  ```json
      {
     "data": [
         {
@@ -71,11 +74,11 @@ Note: The first endpoint requires a :customer_id, but it does not require a tea 
             }
         }
     ]
-}
+  }
   ```
 
 - Creates a new subscription
-  * POST `/api/v1/customers/:customer_id/subscriptions?=#{tea_name}`
+  POST `/api/v1/customers/:customer_id/subscriptions?=#{tea_name}`
 
 - Updates an existing request
-  * PATCH `/api/v1/customers/:customer_id/subscriptions/:subscription_id?=#{tea_name}`
+  PATCH `/api/v1/customers/:customer_id/subscriptions/:subscription_id?=#{tea_name}`
